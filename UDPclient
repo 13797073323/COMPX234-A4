@@ -45,3 +45,8 @@ def download_file(sock, host, port, filename):
         return False
     
     print(f"[CLIENT] Downloading {filename} ({file_size} bytes)...")
+
+        # Create local file
+    with open(filename, 'wb') as f:
+        downloaded = 0
+        block_size = 1000  # Max bytes per block
