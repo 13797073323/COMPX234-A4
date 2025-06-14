@@ -48,3 +48,15 @@ def handle_client(filename, client_addr, data_port):
                     base64_data = base64.b64encode(chunk).decode('utf-8')
                     response = f"FILE {filename} OK START {start} END {end} DATA {base64_data}"
                     client_sock.sendto(response.encode(), addr)
+
+    finally:
+        client_sock.close()
+   
+def main():
+    """Main server function"""
+    # Validate command line arguments
+    if len(sys.argv) != 2:
+        print("Usage: python UDPserver.py <port>")
+        return
+    
+    port = int(sys.argv[1])
