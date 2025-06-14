@@ -81,3 +81,5 @@ def download_file(sock, host, port, filename):
     if close_resp and "CLOSE_OK" in close_resp:
         print(f"\n[CLIENT] Successfully downloaded {filename}")
         return True           
+    print(f"\n[CLIENT] Warning: No close confirmation for {filename}")
+    return False
