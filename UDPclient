@@ -55,3 +55,9 @@ def download_file(sock, host, port, filename):
         while downloaded < file_size:
             end = min(downloaded + block_size - 1, file_size - 1)
             request = f"FILE {filename} GET START {downloaded} END {end}"
+
+                       # Send data request
+            resp = send_reliable(sock, request, (host, data_port))
+            if not resp or "DATA" not in resp:
+                print(f"\n[CLIENT] Failed to download block {downloaded}-{end}")
+                continue
