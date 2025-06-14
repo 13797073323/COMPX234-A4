@@ -25,3 +25,8 @@ def download_file(sock, host, port, filename):
     if not resp:
         print(f"[CLIENT] Failed to download {filename}: No response")
         return False
+    
+        # Handle error response
+    if "ERR" in resp:
+        print(f"[CLIENT] Server error: {resp}")
+        return False
