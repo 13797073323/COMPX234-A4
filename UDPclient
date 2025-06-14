@@ -102,3 +102,13 @@ def main():
     except FileNotFoundError:
         print(f"[CLIENT] File list {filelist} not found")
         return
+    
+        # Create UDP socket
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
+    # Download each file sequentially
+    for filename in filenames:
+        download_file(sock, host, port, filename)
+    
+    sock.close()
+    print("[CLIENT] All downloads completed")
