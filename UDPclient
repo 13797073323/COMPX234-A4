@@ -83,3 +83,14 @@ def download_file(sock, host, port, filename):
         return True           
     print(f"\n[CLIENT] Warning: No close confirmation for {filename}")
     return False
+
+def main():
+    """Main client function"""
+    # Validate command line arguments
+    if len(sys.argv) != 4:
+        print("Usage: python UDPclient.py <host> <port> <filelist>")
+        return
+    
+    host = sys.argv[1]
+    port = int(sys.argv[2])
+    filelist = sys.argv[3]
