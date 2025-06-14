@@ -60,3 +60,8 @@ def main():
         return
     
     port = int(sys.argv[1])
+
+    # Create welcome socket
+    welcome_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    welcome_sock.bind(('', port))
+    print(f"[SERVER] Listening on port {port}")
