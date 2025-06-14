@@ -50,3 +50,8 @@ def download_file(sock, host, port, filename):
     with open(filename, 'wb') as f:
         downloaded = 0
         block_size = 1000  # Max bytes per block
+
+         # Download file in blocks
+        while downloaded < file_size:
+            end = min(downloaded + block_size - 1, file_size - 1)
+            request = f"FILE {filename} GET START {downloaded} END {end}"
