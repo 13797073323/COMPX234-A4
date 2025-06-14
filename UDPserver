@@ -12,7 +12,7 @@ def handle_client(filename, client_addr, data_port):
         client_sock.bind(('', data_port))
         
             # Open requested file
-    with open(filename, 'rb') as f:
+        with open(filename, 'rb') as f:
             file_size = os.path.getsize(filename)
             
             # Main loop for handling client requests
@@ -20,3 +20,13 @@ def handle_client(filename, client_addr, data_port):
                 # Receive client request
                 req_data, addr = client_sock.recvfrom(1024)
                 req_parts = req_data.decode().split()    
+
+                                # Validate message format
+                if len(req_parts) < 3 or req_parts[0] != "FILE" or req_parts[1] != filename:
+                    continue
+                
+                # Process CLOSE request
+                if req_parts[2] == "CLOSE":
+                    client_sock.sendto(f"FILE {filename} CLOSE_OK".encode(), addr)
+                    print(f"[SERVER] Closed connection for {filename}")
+                    break
