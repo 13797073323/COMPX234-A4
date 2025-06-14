@@ -30,3 +30,9 @@ def download_file(sock, host, port, filename):
     if "ERR" in resp:
         print(f"[CLIENT] Server error: {resp}")
         return False
+    
+    # Parse OK response
+    parts = resp.split()
+    if len(parts) < 6 or parts[0] != "OK" or parts[1] != filename:
+        print(f"[CLIENT] Invalid response: {resp}")
+        return False
