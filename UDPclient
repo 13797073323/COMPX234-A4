@@ -36,3 +36,12 @@ def download_file(sock, host, port, filename):
     if len(parts) < 6 or parts[0] != "OK" or parts[1] != filename:
         print(f"[CLIENT] Invalid response: {resp}")
         return False
+    
+    try:
+        file_size = int(parts[3])
+        data_port = int(parts[5])
+    except (ValueError, IndexError):
+        print(f"[CLIENT] Malformed response: {resp}")
+        return False
+    
+    print(f"[CLIENT] Downloading {filename} ({file_size} bytes)...")
