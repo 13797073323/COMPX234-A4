@@ -61,3 +61,17 @@ def download_file(sock, host, port, filename):
             if not resp or "DATA" not in resp:
                 print(f"\n[CLIENT] Failed to download block {downloaded}-{end}")
                 continue
+
+                        # Parse data response
+            try:
+                data_index = resp.index("DATA") + 5
+                base64_data = resp[data_index:]
+                binary_data = base64.b64decode(base64_data)
+                
+                # Write to file
+                f.seek(downloaded)
+                f.write(binary_data)
+                downloaded = end + 1
+                print('*', end='', flush=True)  # Progress indicator
+            except (ValueError, IndexError) as e:
+                print(f"\n[CLIENT] Error decoding data: {e}")
