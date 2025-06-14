@@ -30,3 +30,16 @@ def handle_client(filename, client_addr, data_port):
                     client_sock.sendto(f"FILE {filename} CLOSE_OK".encode(), addr)
                     print(f"[SERVER] Closed connection for {filename}")
                     break
+
+                                # Process GET request
+                elif req_parts[2] == "GET" and len(req_parts) == 7:
+                    start = int(req_parts[4])
+                    end = int(req_parts[6])
+                    
+                    # Validate byte range
+                    if start < 0 or end >= file_size:
+                        continue
+                    
+                    # Read requested file segment
+                    f.seek(start)
+                    chunk = f.read(end - start + 1)
