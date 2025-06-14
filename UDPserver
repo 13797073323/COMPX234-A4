@@ -76,3 +76,11 @@ def main():
             # Validate DOWNLOAD request
             if len(msg) < 2 or msg[0] != "DOWNLOAD":
                 continue
+
+            filename = msg[1]
+            print(f"[SERVER] Received DOWNLOAD request for {filename} from {addr}")
+            
+            # Check file existence
+            if not os.path.exists(filename):
+                welcome_sock.sendto(f"ERR {filename} NOT_FOUND".encode(), addr)
+                continue
