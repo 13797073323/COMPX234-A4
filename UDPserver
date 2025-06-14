@@ -11,3 +11,12 @@ def handle_client(filename, client_addr, data_port):
         client_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         client_sock.bind(('', data_port))
         
+            # Open requested file
+    with open(filename, 'rb') as f:
+            file_size = os.path.getsize(filename)
+            
+            # Main loop for handling client requests
+            while True:
+                # Receive client request
+                req_data, addr = client_sock.recvfrom(1024)
+                req_parts = req_data.decode().split()    
