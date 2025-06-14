@@ -112,3 +112,6 @@ def main():
     
     sock.close()
     print("[CLIENT] All downloads completed")
+
+if __name__ == "__main__":
+    main()
