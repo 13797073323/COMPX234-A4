@@ -1,0 +1,17 @@
+import socket
+import base64
+import sys
+
+def send_reliable(sock, msg, addr, max_retries=5):
+    """Reliable message transmission with exponential backoff"""
+    timeout = 1000  # Initial timeout: 1 second
+    for attempt in range(max_retries):
+        try:
+            sock.sendto(msg.encode(), addr)
+            sock.settimeout(timeout / 1000)
+            response, _ = sock.recvfrom(65535)
+            return response.decode()
+        except socket.timeout:
+            print(f"\n[CLIENT] Timeout (attempt {attempt+1}/{max_retries}), retrying...")
+            timeout *= 2  # Exponential backoff
+    return None
