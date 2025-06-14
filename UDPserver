@@ -84,3 +84,9 @@ def main():
             if not os.path.exists(filename):
                 welcome_sock.sendto(f"ERR {filename} NOT_FOUND".encode(), addr)
                 continue
+
+                        # Create dedicated thread for client
+            data_port = random.randint(50000, 51000)
+            file_size = os.path.getsize(filename)
+            response = f"OK {filename} SIZE {file_size} PORT {data_port}"
+            welcome_sock.sendto(response.encode(), addr)
