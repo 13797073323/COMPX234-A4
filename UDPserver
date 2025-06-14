@@ -97,3 +97,11 @@ def main():
                 args=(filename, addr, data_port),
                 daemon=True
             ).start()
+
+        except KeyboardInterrupt:
+            print("\n[SERVER] Shutting down...")
+            break
+
+if __name__ == "__main__":
+    import sys
+    main()
