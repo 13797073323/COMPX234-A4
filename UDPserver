@@ -90,3 +90,10 @@ def main():
             file_size = os.path.getsize(filename)
             response = f"OK {filename} SIZE {file_size} PORT {data_port}"
             welcome_sock.sendto(response.encode(), addr)
+
+                        # Start client thread
+            threading.Thread(
+                target=handle_client, 
+                args=(filename, addr, data_port),
+                daemon=True
+            ).start()
