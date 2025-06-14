@@ -43,3 +43,8 @@ def handle_client(filename, client_addr, data_port):
                     # Read requested file segment
                     f.seek(start)
                     chunk = f.read(end - start + 1)
+
+                                       # Encode to Base64 and send response
+                    base64_data = base64.b64encode(chunk).decode('utf-8')
+                    response = f"FILE {filename} OK START {start} END {end} DATA {base64_data}"
+                    client_sock.sendto(response.encode(), addr)
