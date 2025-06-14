@@ -75,3 +75,9 @@ def download_file(sock, host, port, filename):
                 print('*', end='', flush=True)  # Progress indicator
             except (ValueError, IndexError) as e:
                 print(f"\n[CLIENT] Error decoding data: {e}")
+
+        # Send close request
+    close_resp = send_reliable(sock, f"FILE {filename} CLOSE", (host, data_port))
+    if close_resp and "CLOSE_OK" in close_resp:
+        print(f"\n[CLIENT] Successfully downloaded {filename}")
+        return True           
