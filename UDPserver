@@ -65,3 +65,14 @@ def main():
     welcome_sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     welcome_sock.bind(('', port))
     print(f"[SERVER] Listening on port {port}")
+
+        # Main server loop
+    while True:
+        try:
+            # Receive download request
+            data, addr = welcome_sock.recvfrom(1024)
+            msg = data.decode().split()
+            
+            # Validate DOWNLOAD request
+            if len(msg) < 2 or msg[0] != "DOWNLOAD":
+                continue
