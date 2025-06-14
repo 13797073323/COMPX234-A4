@@ -15,3 +15,13 @@ def send_reliable(sock, msg, addr, max_retries=5):
             print(f"\n[CLIENT] Timeout (attempt {attempt+1}/{max_retries}), retrying...")
             timeout *= 2  # Exponential backoff
     return None
+
+def download_file(sock, host, port, filename):
+    """Download a single file from server"""
+    print(f"\n[CLIENT] Requesting {filename}...")
+    
+    # Send DOWNLOAD request
+    resp = send_reliable(sock, f"DOWNLOAD {filename}", (host, port))
+    if not resp:
+        print(f"[CLIENT] Failed to download {filename}: No response")
+        return False
